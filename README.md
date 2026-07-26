@@ -4,76 +4,72 @@
 
 ---
 
-## 📖 Project Overview
+## 📖 Overview
 
-Current smart home devices are "passive"—they display numbers but fail to explain what those metrics mean for the occupant. **Lumina** is an Active Guardian system that combines a **Wearable Node** (Activity Tracking) with a **Stationary Hub** (Environmental Sensing) to continuously monitor both the user and their immediate environment.
+Current smart home devices are "passive"—they show you numbers but don't explain what they mean. **Lumina** is an Active Guardian. It combines a **Wearable Node** (Activity Tracking) with a **Stationary Hub** (Environmental Sensing) to monitor both the user and their surroundings.
 
-Lumina operates on a **Hybrid Edge-Cloud Architecture**. A local server aggregates and visualizes sensor data in real time. For advanced contextual analysis, a gateway routes telemetry to the **Nvidia Nemotron LLM** (via OpenRouter), converting physical and environmental data into actionable, human-readable insights.
+Lumina operates on a **Hybrid Edge-Cloud Architecture**. It uses a local server to aggregate and visualize sensor data in real-time. For complex analysis, it employs a gateway that sends raw telemetry to the **Nvidia Nemotron LLM** (via OpenRouter). This allows the system to offer advanced, context-aware intelligence directly to the user based on environmental and physical states.
 
----
-
-## 🖼️ Media & Demos
-
-All media assets referenced below are stored locally in the [`media/`](./media/) directory.
-
-### Screenshots
-| Figure 1 | Figure 2 |
-| :---: | :---: |
-| ![Figure 1: The Lumina Device and Dashboard Setup](media/figure1_device_dashboard.png) | ![Figure 2: Real-time Data Visualization and Hybrid AI Chat Interface](media/figure2_data_vis_ai.png) |
-| *The Lumina Device and Dashboard Setup* | *Real-time Data Visualization and Hybrid AI Chat Interface* |
-
-### Video Demonstration
-* **[Watch Video 1: Live Demonstration of Sensor Data Triggering AI Responses](media/demo_video.mp4)**
-
-> 💡 **Note:** To maintain a light repository size, it is recommended to host long demo videos on YouTube or Vimeo and link them directly here instead of tracking large `.mp4` files directly in Git.
+### Key Features
+* **AI-Driven Context:** Converts raw sensor data (e.g., `"1003 mbar"`, `"6 Lux"`) into human-readable advice (e.g., *"Storm approaching, secure the windows"*).
+* **Fall & Activity Detection:** Uses accelerometer data to detect falls or sleep restlessness based on impact and body orientation.
+* **Holistic Monitoring:** Simultaneously tracks Light, Pressure, Temperature, and Motion to build a complete picture of the user's environment.
 
 ---
 
-## 🗺️ Project Roadmap
+## 🖼️ Demo / Examples
 
-| Phase / Feature | Description | Status |
-| :--- | :--- | :--- |
-| **Environmental Telemetry** | Real-time tracking of barometric pressure, light, and temperature. | ✅ Complete |
-| **Activity & Fall Detection** | Impact detection and posture analysis via wearable accelerometer. | ✅ Complete |
-| **Hybrid Edge-Cloud AI** | Contextual telemetry analysis via Nvidia Nemotron LLM (OpenRouter). | ✅ Complete |
-| **Voice Feedback Loop** | Integration of MAX98357A I2S speaker for spoken alerts (TTS). | 🔄 Planned |
-| **Voice Command Interface** | INMP441 Microphone integration for direct voice queries to AI. | 🔄 Planned |
-| **TinyML Edge Fall Model** | Replace threshold logic with a TensorFlow Lite model via Edge Impulse. | 🔄 Planned |
-| **Smart Home Bridging** | Add MQTT support for direct control of smart bulbs and thermostats. | 🔄 Planned |
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="media/lumina-cover.png" alt="Figure 1: The Lumina Device and Dashboard Setup" width="100%"/>
+      <br />
+      <sub><b>Figure 1:</b> The Lumina Device and Dashboard Setup</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="media/lumina-dashboard.jpg" alt="Figure 2: Real-time Data Visualization and Hybrid AI Chat Interface" width="100%"/>
+      <br />
+      <sub><b>Figure 2:</b> Real-time Data Visualization and Hybrid AI Chat Interface</sub>
+    </td>
+  </tr>
+</table>
 
 ---
 
-## ✨ Detailed Features
+## ✨ Features (Detailed)
 
 ### 1. Environmental Telemetry
-The stationary hub continuously monitors environmental health:
-* **Barometric Pressure:** Detects rapid drops (< 1000 mbar) to predict incoming storms and pressure changes.
-* **Ambient Light:** Evaluates lighting adequacy based on activity and time of day (e.g., reading vs. sleeping).
-* **Temperature:** Monitors heat stress risks using precision environmental sensors.
+The stationary hub continuously monitors the "health" of the room:
+* **Barometric Pressure:** Predicts incoming storms and weather changes (e.g., sudden drops < 1000 mbar).
+* **Ambient Light:** Detects if the lighting is sufficient for the user's current activity (Reading vs. Sleeping) based on the time of day.
+* **Temperature:** Monitors for heat stress risks using accurate environmental sensors.
 
 ### 2. Activity & Safety Monitoring
-The accelerometer module (simulating a wearable tag) tracks physical state:
-* **Fall Detection:** Identifies sharp high-G impacts paired with a sudden shift in orientation (user becoming horizontal).
-* **Sleep / Rest Analysis:** Tracks subtle micro-movements to determine sleep quality vs. restlessness.
+The accelerometer module (simulating a wearable tag) tracks the user's physical state:
+* **Fall Detection:** Identifies sudden high-G impacts followed by a change in tilt orientation (user becoming horizontal).
+* **Sleep/Rest Analysis:** Tracks micro-movements to determine if a user is restless or sleeping soundly.
 
-### 3. AI Contextual Intelligence
-* **Cloud Intelligence:** Complex multi-variable queries (e.g., *"Is this pressure drop combined with user restlessness dangerous?"*) are routed to the Nvidia Nemotron LLM.
-* **Sliding Window Memory:** Retains recent history so the AI can evaluate dynamic trends rather than isolated static readings.
+### 3. AI Analysis
+* **Cloud Intelligence:** Complex queries combining time, sensor states, and historical context (e.g., *"Is this combination of pressure drop and restlessness dangerous?"*) are routed to the Nvidia Nemotron LLM.
+* **Contextual Memory:** The system retains a sliding window of previous sensor states, allowing the AI to compare current readings against recent history for better accuracy.
 
 ---
 
-## 📁 Repository Structure
+## 🚀 Installation & Setup Guide
 
-```text
-.
-├── backend/
-│   ├── dashboard.php        # Web interface for live charts and AI responses
-│   ├── export_csv.php      # Export telemetry history
-│   └── test_data.php       # Ingestion endpoint for ESP32 data
-├── firmware/
-│   └── esp_code.ino        # ESP32 C++ firmware (sensors + HTTP client)
-├── media/
-│   ├── figure1_device_dashboard.png
-│   ├── figure2_data_vis_ai.png
-│   └── demo_video.mp4      # Demo video asset
-└── README.md
+Since Lumina uses a hybrid local-cloud architecture, you need to set up the local server before powering on the device.
+
+### 1. Database Configuration
+The system requires a local MySQL database to store sensor history.
+1. Install **XAMPP** (or any WAMP stack).
+2. Start **Apache** and **MySQL** from the XAMPP Control Panel.
+3. Open your browser and go to `http://localhost/phpmyadmin`.
+4. Create a new database named `sensor_db`.
+5. Run the following SQL command to create the required table:
+
+```sql
+CREATE TABLE readings (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    reading TEXT NOT NULL,
+    reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
