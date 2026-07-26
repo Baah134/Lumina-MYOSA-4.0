@@ -80,8 +80,6 @@ CREATE TABLE readings (
 2. Create a new folder named `myosa_project`.
 3. Copy the PHP files from the `backend/` folder of this repository (`test_data.php`, `dashboard.php`, `export_csv.php`) into that directory.
 
-> ⚠️ **Note:** Ensure your `test_data.php` has your valid OpenRouter API Key. *(Never commit your API key to GitHub!)*
-
 ### 3. Hardware Assembly & Firmware
 * **Wiring:** Connect sensors (BMP280, MPU6050, ADPS9960) via I2C (`SDA` -> GPIO 21, `SCL` -> GPIO 22).
 * **IP Config:** Open the code in `firmware/esp_code.ino` and update the `String URL` with your laptop's local IP address (e.g., `192.168.1.5`).
