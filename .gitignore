@@ -1,0 +1,13 @@
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE Files
+.vscode/
+.idea/
+
+# Environment / Config
+config.php
+.env
+chat_history.json
+last_sensor_state.txt
