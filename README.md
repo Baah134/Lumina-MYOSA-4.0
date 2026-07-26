@@ -73,3 +73,64 @@ CREATE TABLE readings (
     reading TEXT NOT NULL,
     reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+```
+
+### 2. Backend Deployment
+1. Navigate to your XAMPP installation folder (usually `C:\xampp\htdocs\`).
+2. Create a new folder named `myosa_project`.
+3. Copy the PHP files from the `backend/` folder of this repository (`test_data.php`, `dashboard.php`, `export_csv.php`) into that directory.
+
+> ⚠️ **Note:** Ensure your `test_data.php` has your valid OpenRouter API Key. *(Never commit your API key to GitHub!)*
+
+### 3. Hardware Assembly & Firmware
+* **Wiring:** Connect sensors (BMP280, MPU6050, ADPS9960) via I2C (`SDA` -> GPIO 21, `SCL` -> GPIO 22).
+* **IP Config:** Open the code in `firmware/esp_code.ino` and update the `String URL` with your laptop's local IP address (e.g., `192.168.1.5`).
+* **Upload:** Flash the code to the ESP32 using the Arduino IDE.
+
+---
+
+## 🎮 Usage Instructions
+
+To run the system once installed:
+1. **Start the Local Server:** Ensure XAMPP is running Apache and MySQL.
+2. **Power the ESP32:** Connect the ESP32 to a power source. It will automatically connect to WiFi and begin broadcasting sensor packets every 5 seconds.
+3. **View the Dashboard:** Open a browser and navigate to:
+   ```text
+   http://localhost/myosa_project/dashboard.php
+   ```
+
+---
+
+## 🛠️ Tech Stack & Requirements
+
+### Tech Stack
+* **Hardware:** ESP32 Microcontroller, Accelerometer (MPU6050), Pressure/Temp (BMP280), Light (BH1750), OLED Display.
+* **Firmware:** C++ (Arduino Framework).
+* **Backend:** PHP, MySQL (XAMPP Local Server).
+* **AI Model:** Nvidia Nemotron-3-Nano-30b (via OpenRouter API).
+* **Frontend:** HTML/CSS, Chart.js for real-time graphing.
+
+### Hardware Dependencies
+* ESP32 Dev Module
+* Sensors (MPU6050, BMP280, ADPS9960)
+
+### Software Dependencies
+```bash
+# For the AI Server interaction (if running Python backend)
+pip install openai requests
+
+# Local Server Setup
+# Download and install XAMPP (Apache + MySQL)
+```
+
+---
+
+## 🤝 Contribution Notes
+
+We are actively looking for contributors to help expand Lumina's capabilities. We welcome pull requests and feature suggestions!
+
+### Key Roadmap Items:
+* **Voice Feedback Loop:** Integration of an I2S Speaker (MAX98357A) to allow Lumina to verbally announce alerts (Text-to-Speech) for visually impaired users.
+* **Voice Command Interface:** Adding an INMP441 Microphone so users can query the AI naturally without a dashboard.
+* **TinyML Integration:** Replacing the current threshold-based fall detection with a trained TensorFlow Lite model (via Edge Impulse) for higher accuracy.
+* **Smart Home Bridging:** Adding MQTT support to allow Lumina to directly control smart bulbs and thermostats based on its environmental analysis.
